@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load i18n %}
+    {% load account %}
+    <meta name="viewport" width=device-width, initial scale=1.0>
+    <title>Mooneystore account</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<section class="header">
+    <nav>
+    <div class="logo">
+        <p id="ttl">AFRIC<span style="color: #000;">ANA</span><i class="fa fa-leaf"></i></p>
+    </div>
+    <div class="nav-links">
+        <ul>
+        <li><a href="webp.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        </ul>
+    </div>
+    </nav>
+    <div class="row">
+    <div class="col-2">
+        <img src="{% static 'images/Picture1.png' %}">
+    </div>
+    <div class="col-2">
+        <div class="loginbox">
+            <h1>Login</h1>
+            {% if form.errors %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <ul>
+                        <li style="color:red;">{{field.errors.0}}</li>
+        
+                    </ul>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+        
+            <form method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <p>Email Address</p>
+                <input type="email" name="login" required>
+                <p>Password</p>
+                <input type="password" name="password" required>
+                <input type="submit" value="Login">
+                <br>
+                <a href="{% url 'account_reset_password' %}">Forgot password</a>
+                <br>
+                <a href="{% url 'account_signup' %}">Create Account</a>
+              </form>
+        
+        </div>
+        
+    
+    </div>
+    </div>
+</section>
+
+<!--footer-->
+<section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+            <h3>Download Our App</h3>
+            <p>Download App for Android and IOS mobile phone.</p>
+                <div class="app-logo">
+                    <img src="{% static 'images/play-store.png' %}">
+                    <img src="{% static 'images/app-store.png' %}">
+                </div>
+            
+            </div>
+            <div class="footer-col-2">
+                <p id="ttl2">AFRIC<span style="color: #fff;">ANA</span><i class="fa fa-leaf"></i></p>
+                <p> We ensure you are connected to the future with just a click.<br> Shop with us to stay connected.</p>
+            </div>
+            <div class="footer-col-3">
+            <h3>Useful Links</h3>
+            <ul>
+                <li>Coupons</li>
+                <li>Blog Post</li>
+                <li>Return Policy</li>
+                <li>Join Affiliate</li>
+            </ul>
+            </div>
+             <div class="footer-col-4">
+            <h3>Follow us</h3>
+            <ul>
+                <li>Facebook</li>
+                <li>X</li>
+                <li>Instagram</li>
+                <li>Youtube</li>
+            </ul>
+            </div>
+            
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2023 - Lenny B</p>
+        
+    
+    </div>
+</section>
+</body>
+</html>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

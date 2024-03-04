@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta name="viewport" width=device-width, initial scale=1.0>
+        <title>products detail view</title>
+        <link rel="stylesheet" href="{% static 'cart-order.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.jss">
+    </head>
+</head>
+<body>
+    <section class="main">
+    <nav>
+        <div class="logo">
+            <p id="ttl">AFRIC<span style="color: #000;">ANA</span><i class="fa fa-leaf"></i></p>
+        </div>
+        </div>
+        <div class="nav-links">
+            <ul>
+            <li><a href="webp.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="account.html">Account</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="detail-window">
+        <div class="col-2">
+            <img src="{% static 'images/Jyellowln.png' %}">
+            <div class="image-box">
+                <div class="col-3">
+                    <img src="{% static 'images/JBlack2.jpg' %}">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Jordan4FireRed-298542.jpg' %}">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/2.jpg' %}">
+                </div>
+            </div>
+        </div>
+        <div class="col-2" id="desc">
+            <h4>Air Jordan 4</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                
+            </div>
+            <p>Ksh 4,999</p>
+            <div class="cart-box">
+                <div class="add-cart">
+                    <input type="number" name="quantity" maxlength="2">
+                </div>
+                <div class="add-cart">
+                    <button id="cart-btn">Add To Cart</button>
+                </div>
+            </div>
+            <h5>Product Description</h5>
+        </div>
+    </section>
+    </section>
+    <!--footer-->
+    <section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+            <h3>Download Our App</h3>
+            <p>Download App for Android and IOS mobile phone.</p>
+                <div class="app-logo">
+                    <img src="{% static 'images/play-store.png' %}">
+                    <img src="{% static 'images/app-store.png' %}">
+                </div>
+            
+            </div>
+            <div class="footer-col-2">
+                <p id="ttl2">AFRIC<span style="color: #fff;">ANA</span><i class="fa fa-leaf"></i></p>
+                <p> We ensure you are connected to the future with just a click.<br> Shop with us to stay connected.</p>
+            </div>
+            <div class="footer-col-3">
+            <h3>Useful Links</h3>
+            <ul>
+                <li>Coupons</li>
+                <li>Blog Post</li>
+                <li>Return Policy</li>
+                <li>Join Affiliate</li>
+            </ul>
+            </div>
+             <div class="footer-col-4">
+            <h3>Follow us</h3>
+            <ul>
+                <li>Facebook</li>
+                <li>X</li>
+                <li>Instagram</li>
+                <li>Youtube</li>
+            </ul>
+            </div>
+            
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2023 - Lenny B</p>
+        
+    
+    </div>
+    </section>
+</body>
+</html>

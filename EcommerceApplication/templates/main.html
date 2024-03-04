@@ -1,0 +1,397 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" width=device-width, initial scale=1.0>
+    <title>MooneyStore Shopping Site</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.jss">
+</head>
+<body>
+<section class="header">
+    <nav>
+    <div class="logo">
+    <p id="ttl">AFRIC<span style="color: #000;">ANA</span><i class="fa fa-leaf"></i></p>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <ul>
+            <i class="fa fa-times" id="hidden1" onclick="hideMenu()"></i>
+        <li><a href="{% url 'products'%}">Products</a></li>
+        {% if user.is_authenticated %}
+            <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
+            <div class="acc-submenu">
+                <ul>
+                    <li><a href="">My Account</a></li>
+                    <li><a href="">Orders</a></li>
+                    <li><a href="">Saved Items</a></li>
+                    <li><a href="{% url 'custom_logout' %}">Log Out</a></li>
+        
+                </ul>
+            </div>
+        </li>
+        {% else %}
+            <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Account</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
+                <div class="acc-submenu">
+                    <ul>
+                        <li><a href="">My Account</a></li>
+                        <li><a href="">Orders</a></li>
+                        <li><a href="">Saved Items</a></li>
+                        <li><a href="{% url 'account_login' %}">Sign In</a></li>
+            
+                    </ul>
+                </div>
+            </li>
+        {% endif %}
+        <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
+        <li><a href="account.html"></a><i class="fa fa-shopping-cart" id="facart"></i>Cart</li>
+        </ul>
+    </div>
+        <i class="fa fa-bars" id="hidden2" onclick="showMenu()"></i>
+    </nav>
+        
+    <div class="row">
+    <div class="col-2">
+        <h1>Capture Your Happiness<br>with Africana!</h1>
+        <p>Get your best fit, quality products and in time with just a click, from our trusted patners and <br>global suppliers anywhere, anytime.</p>
+        <a href="products.html" class="btn"> Order Now &#8594;</a>
+    </div>
+    <div class="col-2">
+        <img src="{% static 'images/Picture1.png' %}">
+    
+    </div>
+    </div>
+</section>
+<!--image slider-->
+         
+<section class="rotate">
+    <div class="row">
+    <div class="col-2">
+        <img src="{% static 'images/Stech.png' %}">
+     </div>
+    <div class="col-2">
+        <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="{% static 'images/smart1.jpeg' %}"></div>
+            <div class="swiper-slide"><img src="{% static 'images/smart2.jpeg' %}"></div>
+            <div class="swiper-slide"><img src="{% static 'images/smart3.jpeg' %}"></div>
+            <div class="swiper-slide"><img src="{% static 'images/smart4.jpeg' %}"></div>
+        </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+        
+    </div>
+</div>
+    </div>
+    
+    
+
+</section>
+<!--featured categories-->
+<section class="categories">
+    <div class="container">
+        <h2 class="title">Featured Products</h2>
+    <div class="row">
+        <div class="col-4">
+            <img src="{% static 'images/EssentialWt.jpg' %}">
+            <h4>Essentials Hoodie</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                
+            </div>
+            <p>Ksh 2,000</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/os13edited.png' %}">
+            <h4>Iphone 13 Pro</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                
+            </div>
+            <p>Ksh 74,000</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/Jyellowln.png' %}">
+            <h4>Air Jordan 4</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                
+            </div>
+            <p>Ksh 4,999</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/A54edited.png' %}">
+            <h4>Oppo A54</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+                <i class="fa fa-star-o"></i>
+                
+            </div>
+            <p>Ksh 20,000</p>
+        </div>
+    </div>
+<!--Latest Products-->
+    <h2 class="title">Latest Products</h2>
+    <div class="row">
+        <div class="col-4">
+            <img src="{% static 'images/Chanelbag1.jpg' %}">
+            <h4>Chanel Flap Bag</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+                
+            </div>
+            <p>Ksh 579,000</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/LacostePJ.jpeg' %}">
+            <h4>Lacoste Puffer Jacket</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+                
+            </div>
+            <p>Ksh 7,500</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/MI10c.png' %}">
+            <h4>Redmi 10C</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                
+            </div>
+            <p>Ksh 18 000</p>
+        </div>
+        <div class="col-4">
+            <img src="{% static 'images/Ps51.jpeg' %}">
+            <h4>Sony Playstation5</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+                
+            </div>
+            <p>Ksh 105,000</p>
+        </div>
+    </div>
+    </div>
+    
+</section>
+<section class="offer">
+    <div class="container">
+        <div class="row">
+        <div class="col-2">
+            <img src="{% static 'images/Smartband.png' %}" class="offer-img"/>
+        </div>
+        <div class="col-2">
+            <p>Exclusively available on Africana</p>
+            <h1>Smart Band 7</h1>
+            <small>The Mi Smart Band 7 features a 39.9% larger(than Mi Band 6) AMOLED color full-touch display with adjustable brightness, so everything is clear as can be.</small>
+            <a href="" class="btn">Buy Now &#8594;</a>
+        </div>
+        
+        </div>
+    
+    </div>
+</section>
+<!-------testimonial------>
+<section class="testimonial">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Africana is a reliable<br> online store because<br> i have bought items with them <br>with no regret.</p>
+             <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+            </div>
+                <img src="{% static 'images/drill.png' %}">
+                <h3>Christian Drury</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Africana offers a return<br> option incase the device is <br>defective or not the desired type<br>or model.</p>
+             <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+                <i class="fa fa-star-0"></i>
+            </div>
+                <img src="{% static 'images/lop.png' %}">
+                <h3>Eric Donald</h3>
+            </div>
+             <div class="col-3">
+                 <i class="fa fa-quote-left"></i>
+                <p>Quick deliveries with<br> affordable delivery fees<br> on Africana. I'll always<br> shop with you </p>
+             <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>    
+            </div>
+                 <img src="{% static 'images/s1.PNG' %}">
+                 <h3>Emiliano Martinez</h3>
+            </div>
+        </div>
+    </div>
+    
+</section>
+    
+<!--Brands-->
+<section class="brands">
+    <div class="container">
+        <div class="row">
+        <div class="col-5">
+            <img src="{% static 'images/logo-godrej.png' %}">
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/logo-oppo.png' %}">
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/logo-paypal.png' %}">
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/logo-coca-cola.png' %}">
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/logo-philips.png' %}">
+        </div>
+        </div>
+    
+    </div>
+
+</section>
+<!------footer------>
+<section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+            <h3>Download Our App</h3>
+            <p>Download App for Android and IOS mobile phone.</p>
+                <div class="app-logo">
+                    <img src="{% static 'images/play-store.png' %}">
+                    <img src="{% static 'images/app-store.png' %}">
+                </div>
+            
+            </div>
+            <div class="footer-col-2">
+                <p id="ttl2">AFRIC<span style="color: #fff;">ANA</span><i class="fa fa-leaf"></i></p>
+                <p> We ensure you are connected to the future with just a click.<br> Shop with us to stay connected.</p>
+            </div>
+            <div class="footer-col-3">
+            <h3>Useful Links</h3>
+            <ul>
+                <li>Coupons</li>
+                <li>Blog Post</li>
+                <li>Return Policy</li>
+                <li>Join Affiliate</li>
+            </ul>
+            </div>
+             <div class="footer-col-4">
+            <h3>Follow us</h3>
+            <ul>
+                <li>Facebook</li>
+                <li>X</li>
+                <li>Instagram</li>
+                <li>Youtube</li>
+            </ul>
+            </div>
+            
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2023 - Lenny B</p>
+        
+    
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    loop: true,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable:true,
+    },
+        
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    });
+    
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
+</body>
+</html>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
