@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" width=device-width, initial scale=1.0>
+    <meta name="viewport" width=device-width, initial-scale=1.0>
     <title>Mooneystore Products</title>
     <link rel="stylesheet" href="{% static 'main.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
     </div>
     <div class="nav-links">
         <ul>
-        <li><a href="{% url 'main' %}">Home</a></li>
+        <li><a href="{% url 'Core:main' %}">Home</a></li>
         {% if user.is_authenticated %}
             <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
             <div class="acc-submenu">
@@ -27,7 +27,7 @@
                     <li><a href="">My Account</a></li>
                     <li><a href="">Orders</a></li>
                     <li><a href="">Saved Items</a></li>
-                    <li><a href="{% url 'custom_logout' %}">Log Out</a></li>
+                    <li><a href="{% url 'Authentication:custom_logout' %}">Log Out</a></li>
         
                 </ul>
             </div>
@@ -61,113 +61,24 @@
             
             </select>
         </div>
+    
     <div class="row">
+        {% for item in object_list %}
         <div class="col-4">
-            <img src="{% static 'images/Chanelbag1.jpg' %}">
-            <h4>Chanel Flap Bag</h4>
+            <a href="{{ item.get_absolute_url }}"><img src="{{item.item_image.url}}"></a>
+            <h4>{{item.title}}</h4>
             <div class="rating">
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
-                <i class="fa fa-star-half"></i>
+                <i class="fa fa-star"></i>
                 
             </div>
-            <p>Ksh 579,000</p>
+            <p>Ksh {{item.price|floatformat:"0,0"}}</p>
         </div>
-        <div class="col-4">
-            <img src="{% static 'images/LacostePJ.jpeg' %}">
-            <h4>Lacoste Puffer Jacket</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half"></i>
-                
-            </div>
-            <p>Ksh 7,500</p>
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/MI10c.png' %}">
-            <h4>Redmi 10C</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                
-            </div>
-            <p>Ksh 18 000</p>
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/Ps51.jpeg' %}">
-            <h4>Sony Playstation5</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half"></i>
-                
-            </div>
-            <p>Ksh 105,000</p>
-        </div>    
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <img src="{% static 'images/EssentialWt.jpg' %}">
-            <h4>Essentials Hoodie</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                
-            </div>
-            <p>Ksh 2,000</p>
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/os13edited.png' %}">
-            <h4>Iphone 13 Pro</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                
-            </div>
-            <p>Ksh 74,000</p>
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/Jyellowln.png' %}">
-            <h4>Air Jordan 4</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                
-            </div>
-            <p>Ksh 4,999</p>
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/A54edited.png' %}">
-            <h4>Oppo A54</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half"></i>
-                <i class="fa fa-star-o"></i>
-                
-            </div>
-            <p>Ksh 20,000</p>
-        </div>
+        {% endfor %}
+        
     </div>
     <div class="page-btn">
         <span>1</span>

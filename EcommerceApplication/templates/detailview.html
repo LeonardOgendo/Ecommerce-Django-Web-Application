@@ -33,21 +33,21 @@
     </nav>
     <section class="detail-window">
         <div class="col-2">
-            <img src="{% static 'images/Jyellowln.png' %}">
+            <img src="{{object.item_image.url}}">
             <div class="image-box">
                 <div class="col-3">
-                    <img src="{% static 'images/JBlack2.jpg' %}">
+                    <img src="{{ object.descimage1.url }}">
                 </div>
                 <div class="col-3">
-                    <img src="{% static 'images/Jordan4FireRed-298542.jpg' %}">
+                    <img src="{{ object.descimage2.url }}">
                 </div>
                 <div class="col-3">
-                    <img src="{% static 'images/2.jpg' %}">
+                    <img src="{{ object.descimage3.url }}">
                 </div>
             </div>
         </div>
         <div class="col-2" id="desc">
-            <h4>Air Jordan 4</h4>
+            <h4>{{object.title}}</h4>
             <div class="rating">
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
@@ -56,16 +56,17 @@
                 <i class="fa fa-star-o"></i>
                 
             </div>
-            <p>Ksh 4,999</p>
+            <p>Ksh {{object.price}}</p>
             <div class="cart-box">
                 <div class="add-cart">
                     <input type="number" name="quantity" maxlength="2">
                 </div>
                 <div class="add-cart">
-                    <button id="cart-btn">Add To Cart</button>
+                    <a href="{{ object.get_add_to_cart_url }}"><button id="cart-btn">Add To Cart</button></a>
                 </div>
             </div>
             <h5>Product Description</h5>
+            <p class="item-desc">{{ object.description }}</p>
         </div>
     </section>
     </section>

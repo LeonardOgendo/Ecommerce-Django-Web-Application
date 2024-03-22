@@ -21,7 +21,7 @@
     <div class="nav-links" id="navLinks">
         <ul>
             <i class="fa fa-times" id="hidden1" onclick="hideMenu()"></i>
-        <li><a href="{% url 'products'%}">Products</a></li>
+        <li><a href="{% url 'Core:productslistview' %}">Products</a></li>
         {% if user.is_authenticated %}
             <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
             <div class="acc-submenu">
@@ -29,7 +29,7 @@
                     <li><a href="">My Account</a></li>
                     <li><a href="">Orders</a></li>
                     <li><a href="">Saved Items</a></li>
-                    <li><a href="{% url 'custom_logout' %}">Log Out</a></li>
+                    <li><a href="{% url 'Authentication:custom_logout' %}">Log Out</a></li>
         
                 </ul>
             </div>

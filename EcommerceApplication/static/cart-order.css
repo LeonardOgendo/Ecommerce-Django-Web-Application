@@ -113,7 +113,7 @@ nav
 {
     display: flex;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 .add-cart input
 {
@@ -224,4 +224,11 @@ ul
 .copyright
 {
     text-align: center;
+}
+/*--Item descriptiom--*/
+.item-desc
+{
+    font-size: 14px;
+    color: hsl(0, 2%, 22%);
+    margin-top: 15px;
 }
