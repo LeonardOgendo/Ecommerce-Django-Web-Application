@@ -67,11 +67,72 @@ nav
     margin: 0 150px 0 150px;
 
 }
+.inside-li
+{
+    display: flex;
+}
+.inside-li .fa
+{
+    margin-top: 5px;
+}
+#fauser, #fahelp
+{
+    margin-right: 5px;
+}
+#fadown1, #fadown2
+{
+    margin-left: 3px;
+    font-size: 14px;
+}
+#facart
+{
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/*--account submenu--*/
+.acc
+{
+    position: relative;
+}
+.acc-submenu
+{
+    display: none;
+    position: absolute;
+    width: 150px;
+    background: radial-gradient(#fff,#ffd6d6);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    border-radius: 10px;
+}
+.acc-submenu ul
+{
+    margin: 10px 0 10px 15px;
+}
+.acc:hover .acc-submenu
+{
+    display: block;
+}
+.acc-submenu ul li a
+{
+    font-size: 15px;
+}
+
+.count-badge
+{
+    height: 3px;
+    background: #ff523b;
+    color: #fff;
+    margin-right: 5px;
+    border-radius: 3px;
+    padding: 0px 5px 0 5px;
+    font-size: 14px;
+}
 .col-2
 {
     flex-basis: 50%;
     width: 100%;
-    margin-top: 35px;
+    margin-top: 15px;
 }
 .col-2 >img
 {
@@ -129,13 +190,24 @@ nav
     margin-left: 5px;
     font-size: 14px;
     color: #fff;
-    background: #ff523b;
+    background: rgb(10, 134, 10);
     border: none;
     border-radius: 5px;
 }
 .add-cart input[type="number"]
 {
     padding: 5px;
+}
+#remove-cart-btn
+{
+    height: 30px;
+    width: 150px;
+    margin-left: 5px;
+    font-size: 14px;
+    color: #fff;
+    background: #fc3a20;
+    border: none;
+    border-radius: 5px;
 }
 .rating .fa
 {
@@ -145,6 +217,23 @@ nav
 {
     font-size: 16px;
     color: #3d3a3a;
+}
+
+/*--cart messages--*/
+.cart-msg
+{
+    margin-top: 60px;
+    margin-left: 40%;
+    background: rgb(47, 201, 47);
+    width: 400px;
+    border-radius: 5px;
+}
+
+.close-button
+{
+    margin-left: 60px;
+    width: 20px;
+
 }
 /*-----footer----*/
 .container
