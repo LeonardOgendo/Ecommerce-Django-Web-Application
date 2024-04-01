@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
+
+from django.contrib.auth.models import User
 from django.shortcuts import reverse
+
 
 class Item(models.Model):
     item_image = models.ImageField(upload_to='images/', null=True)
@@ -38,6 +41,13 @@ class OrderItem(models.Model):
     
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
+    
+    def get_total_item_price(self):
+        return self.quantity * self.item.price
+    
+    #This is so that on the Order model, i can calculate a total
+    def get_final_price(self):
+        return self.get_total_item_price()
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -48,3 +58,22 @@ class Order(models.Model):
     
     def __str__(self):
         return self.user.username
+    
+    def get_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.get_final_price()
+        return total
+    
+
+class CustomerDetail(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100)
+    town = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)  # Assuming phone number can include non-numeric characters like '+'
+    pickup_station = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.first_name} {self.surname}"

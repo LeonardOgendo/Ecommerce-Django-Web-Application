@@ -34,3 +34,15 @@ function showMenu(){
 function hideMenu(){
     navLinks.style.right = "-200px";
 }
+
+//Payment View redirect
+
+function submitPaymentForm() {
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+    if (paymentMethod === 'mpesa') {
+        document.getElementById('checkout-form').action = "{% url 'Core:mpesa-payment' %}";
+    } else if (paymentMethod === 'paypal') {
+        document.getElementById('checkout-form').action = "{% url 'paypal_api_view' %}";
+    }
+    document.getElementById('checkout-form').submit();
+}

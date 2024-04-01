@@ -26,6 +26,7 @@
         <div class="nav-links">
             <ul>
                 <li><a href="{% url 'Core:main' %}">Home</a></li>
+                <li><a href="{% url 'Core:productslistview' %}">Products</a></li>
                 {% if user.is_authenticated %}
                     <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
                     <div class="acc-submenu">
@@ -52,66 +53,61 @@
                     </li>
                 {% endif %}
                 <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
-                <li><a href="{% url 'Core:order-summary' %}"><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
+                <li><a href="{% url 'Core:order-summary' %}"></a><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</li>
                 </ul>
         </div>
     </nav>
-    <div class="cart-msg">
-        {% if messages %}
-         <div class="container">
-            {% for message in messages %}
-                <div class="alert">
-                    {{ message }}
-                    <button type="button" class="close-button" onclick="dismissMessage(this)">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
+    <section class="order-summary">
+
+        {% if object.get_total %}
+        <h3>Order Summary</h3>
+        <table class="table">
+            
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Item Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% endif %}
+            {% for order_item in object.items.all %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ order_item.item.title}}</td>
+                <td>Ksh.  {{ order_item.item.price}}</td>
+                <td>{{order_item.quantity}}</td>
+                <td>Ksh.  {{ order_item.get_total_item_price }}</td>
+            </tr>
+            {% empty %}
+            <div style="margin: 100px 0 20% 300px;">
+            <p style="font-size: 17px; margin-bottom: 10px;"> Your cart is empty.</p>
+            <a href=""><button class="ord-btn2">Continue Shopping</button></a>
+            </div>
             {% endfor %}
-         </div>
-        {% endif %}
-    </div>
+
+            {% if object.get_total %}
+            <tr>
+                <td colspan="4"><b>Order Total</b></td>
+                <td>Ksh.  {{ object.get_total }}</td>
+            </tr>
+            {% endif %}
     
-    <section class="detail-window">
-        <div class="col-2">
-            <img src="{{object.item_image.url}}">
-            <div class="image-box">
-                <div class="col-3">
-                    <img src="{{ object.descimage1.url }}">
-                </div>
-                <div class="col-3">
-                    <img src="{{ object.descimage2.url }}">
-                </div>
-                <div class="col-3">
-                    <img src="{{ object.descimage3.url }}">
-                </div>
-            </div>
+            </tbody>
+
+        </table>
+        {% if object.get_total %}
+        <div class="order-buttons">
+            <a href="{% url 'Core:checkout'%}"><button class="ord-btn">Proceed To Checkout</button></a>
+            <a href="{% url 'Core:productslistview' %}"><button class="ord-btn2">Continue Shopping</button></a>
         </div>
-        <div class="col-2" id="desc">
-            <h4>{{object.title}}</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                
-            </div>
-            <p>Ksh {{object.price}}</p>
-            <div class="cart-box">
-                <div class="add-cart">
-                    <input type="number" name="quantity" maxlength="2">
-                </div>
-                <div class="add-cart">
-                    <a href="{{ object.get_add_to_cart_url }}"><button id="cart-btn">Add To Cart</button></a>
-                </div>
-                <div class="remove-cart">
-                    <a href="{{ object.get_remove_from_cart_url }}"><button id="remove-cart-btn">Remove From Cart</button></a>
-                </div>
-            </div>
-            <h5>Product Description</h5>
-            <p class="item-desc">{{ object.description }}</p>
-        </div>
+        {% endif %}
     </section>
+    
+   
     </section>
     <!--footer-->
     <section class="footer">

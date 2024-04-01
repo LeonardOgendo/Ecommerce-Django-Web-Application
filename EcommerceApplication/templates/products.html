@@ -46,7 +46,7 @@
             </li>
         {% endif %}
         <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
-        <li><a href="account.html"></a><i class="fa fa-shopping-cart" id="facart"></i>Cart</li>
+        <li><a href="{% url 'Core:order-summary' %}"><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
         </ul>
     </div>
     </nav>

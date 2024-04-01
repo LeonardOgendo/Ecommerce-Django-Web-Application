@@ -26,6 +26,7 @@
         <div class="nav-links">
             <ul>
                 <li><a href="{% url 'Core:main' %}">Home</a></li>
+                <li><a href="{% url 'Core:productslistview' %}">Products</a></li>
                 {% if user.is_authenticated %}
                     <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
                     <div class="acc-submenu">
@@ -52,66 +53,50 @@
                     </li>
                 {% endif %}
                 <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
-                <li><a href="{% url 'Core:order-summary' %}"><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
+                <li><a href="{% url 'Core:order-summary' %}"></a><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</li>
                 </ul>
         </div>
     </nav>
-    <div class="cart-msg">
-        {% if messages %}
-         <div class="container">
-            {% for message in messages %}
-                <div class="alert">
-                    {{ message }}
-                    <button type="button" class="close-button" onclick="dismissMessage(this)">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            {% endfor %}
-         </div>
-        {% endif %}
-    </div>
-    
-    <section class="detail-window">
-        <div class="col-2">
-            <img src="{{object.item_image.url}}">
-            <div class="image-box">
-                <div class="col-3">
-                    <img src="{{ object.descimage1.url }}">
-                </div>
-                <div class="col-3">
-                    <img src="{{ object.descimage2.url }}">
-                </div>
-                <div class="col-3">
-                    <img src="{{ object.descimage3.url }}">
-                </div>
+    <section class="customer-details">
+        <form method="POST" action="{% url 'Core:customer-details-view' %}">
+            {% csrf_token %}
+            <div class="detailbox">
+                <h4>Personal Details</h4>
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" id="first_name"><br>
+            
+                <label for="surname">Surname</label>
+                <input type="text" id="surname" name="surname"><br>
+            
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="">Select Country</option>
+                    {% for code, name in countries %}
+                        <option value="{{ code }}">{{ name }}</option>
+                    {% endfor %}
+                </select><br>
+            
+                <label for="phone_number">Phone Number</label>
+                <input type="number" id="phone_number" name="phone_number"><br>
             </div>
-        </div>
-        <div class="col-2" id="desc">
-            <h4>{{object.title}}</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                
+            <div class="detailbox" id="dbox2">
+                <h4>Delivery Address</h4>
+                <label for="town">Town</label>
+                <input type="text" id="town" name="town"><br>
+            
+                <label for="pickup_station">Pickup Station</label>
+                <select id="pickup_station" name="pickup_station">
+                    <option>Kakamega Cossim Station</option>
+                    <option>Mega-City Kisumu</option>
+                    <option>Mbale-Pickup Station</option>
+                </select><br>
             </div>
-            <p>Ksh {{object.price}}</p>
-            <div class="cart-box">
-                <div class="add-cart">
-                    <input type="number" name="quantity" maxlength="2">
-                </div>
-                <div class="add-cart">
-                    <a href="{{ object.get_add_to_cart_url }}"><button id="cart-btn">Add To Cart</button></a>
-                </div>
-                <div class="remove-cart">
-                    <a href="{{ object.get_remove_from_cart_url }}"><button id="remove-cart-btn">Remove From Cart</button></a>
-                </div>
-            </div>
-            <h5>Product Description</h5>
-            <p class="item-desc">{{ object.description }}</p>
-        </div>
+        
+            <button id="cdetail-btn" type="submit">Save</button>
+        </form>
+        
     </section>
+    
     </section>
     <!--footer-->
     <section class="footer">
