@@ -11,7 +11,13 @@ urlpatterns = [
     path('order-summary', views.OrderSummaryView.as_view(), name='order-summary'),
     path('checkout', views.CheckoutView.as_view(), name='checkout'),
     path('customer-details', views.customer_details_view, name="customer-details-view"),
+    path('help/order-placement', views.help_orderplacement, name="help-orderplacement"),
+    path('help/payments', views.help_payments, name='help-payments'),
+    path('help/returns', views.help_returns, name="help-returns"),
+    path('size-chart' ,views.size_chart, name='size-chart'),
     
     #MPESA API
-    path('payment', views.mpesa_payment, name='mpesa-payment')
+    path('mpesa-payment', views.mpesa_payment, name='mpesa-payment'),
+    path('mpesa-callback', views.stk_push_callback, name='stk_push_callback')
+       
 ]

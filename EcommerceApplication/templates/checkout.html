@@ -52,7 +52,15 @@
                         </div>
                     </li>
                 {% endif %}
-                <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
+                <li class="acc"><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div>
+                    <div class="acc-submenu" id="submenu-2">
+                        <ul>
+                            <li><a href="{% url 'Core:help-orderplacement' %}">Placing an Order</a></li>
+                            <li><a href="{% url 'Core:help-payments' %}">Payments</a></li>
+                            <li><a href="{% url 'Core:help-returns' %}">Return and Refunds</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="{% url 'Core:order-summary' %}"></a><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</li>
                 </ul>
         </div>
@@ -60,14 +68,14 @@
     {% if customer_details %}
         <section class="checkout">
             
-            <form id="checkout-form" method="POST">
+            <form id="checkout-form" method="POST" action="{% url 'Core:mpesa-payment'%}">
             {% csrf_token %}
             <div class="flex-box">
                 <div class="chkout-box">
                     <div class="cbox">
                         <div class="mini-fbox">
                             <div><h4>Customer Address</h4></div>
-                            <div><a id="anchor1" href="">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+                            <div><a id="anchor1" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
                         </div>
                         <p>{{ customer_details.first_name }} {{ customer_details.surname}}</p>
                         <p style="margin-top: 10px;">{{ customer_details.country }} | {{ customer_details.town }} | {{ customer_details.phone_number }}
@@ -75,7 +83,7 @@
                     <div class="cbox">
                         <div class="mini-fbox">
                             <div><h4>Delivery Details</h4></div>
-                            <div><a id="anchor2" href="">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+                            <div><a id="anchor2" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
                         </div>
                         <p>Pick-up Station</p>
                         <p>{{ customer_details.pickup_station }}</p>
@@ -121,7 +129,7 @@
                     </div>
                     <div class="checkout-btns">
                         <button id="chk-btn1">Modify Cart</button>
-                        <button id="chk-btn2" onclick="submitPaymentForm()">Confirm Order</button>
+                        <button type="submit" id="chk-btn2" >Confirm Order</button>
                     </div>
                 </div>
             </div>
@@ -130,8 +138,8 @@
 
         {% else %}
         <div class="chk-alt-content">
-            <p> Customer details not found.  Please complete<br> your profile before placing your order.</p>
-            <a href=""><button>Complete Profile</button></a>
+            <p> Customer details not found. Please complete<br> your profile before placing your order.</p>
+            <a href="{% url 'Core:customer-details-view' %}"><button id="alt-content-btn">Complete Profile</button></a>
         </div>
         {% endif %}
         

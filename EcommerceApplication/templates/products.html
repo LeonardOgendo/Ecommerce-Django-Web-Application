@@ -1,4 +1,5 @@
 {% load static %}
+{% load cart_template_tag %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +46,16 @@
                 </div>
             </li>
         {% endif %}
-        <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
-        <li><a href="{% url 'Core:order-summary' %}"><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
+        <li class="acc"><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div>
+            <div class="acc-submenu" id="submenu-2">
+                <ul>
+                    <li><a href="{% url 'Core:help-orderplacement' %}">Placing an Order</a></li>
+                    <li><a href="{% url 'Core:help-payments' %}">Payments</a></li>
+                    <li><a href="{% url 'Core:help-returns' %}">Return and Refunds</a></li>
+                </ul>
+            </div>
+        </li>
+        <li><a href="{% url 'Core:order-summary' %}"><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
         </ul>
     </div>
     </nav>

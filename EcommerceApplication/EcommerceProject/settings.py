@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-02s1xrb5_px%du==y9s*9)^t7*9@4)g#5y-2lk4j)y()cl9)*v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.42.0.1', '127.0.0.1', '2541-196-250-209-176.ngrok-free.app']
+ALLOWED_HOSTS = ['192.168.149.93 ', '127.0.0.1', '2320-196-250-210-182.ngrok-free.app']
 
 
 # Application definition
@@ -155,7 +155,6 @@ LOGIN_REDIRECT_URL = '/'
 MPESA_ENVIRONMENT = 'sandbox'
 MPESA_CONSUMER_KEY = 'U3u5jARsqEn3t8cZGrrIzAlsiTbmeWkfjP8cmbOuXFqdIjb4'
 MPESA_CONSUMER_SECRET = 'X1lOXQYmX5LHuwotvTR0wQuYDLnZzrnhT81m6DuSH8GSiO8jLgVFu1AI4Wrpk4wZ'
-
 MPESA_SHORTCODE = '174379'
 
 MPESA_EXPRESS_SHORTCODE = '174379'
@@ -164,3 +163,6 @@ MPESA_SHORTCODE_TPE = 'paybill'
 MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
 MPESA_INITIATOR_USERNAME = 'testapi'
 MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom999!*!'
+
+#ngrok domain for testing
+NGROK_DOMAIN = '2125-197-248-74-74.ngrok-free.app'

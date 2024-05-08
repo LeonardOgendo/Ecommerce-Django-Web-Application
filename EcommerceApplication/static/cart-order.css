@@ -64,7 +64,7 @@ nav
 {
     display: flex;
     justify-content: space-between;
-    margin: 0 150px 0 150px;
+    margin: 0 150px 100px 150px;
 
 }
 .inside-li
@@ -104,6 +104,11 @@ nav
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
     z-index: 1;
     border-radius: 10px;
+    text-align: left;
+}
+#submenu-2
+{
+    width: 195px;
 }
 .acc-submenu ul
 {
@@ -174,7 +179,7 @@ nav
 {
     display: flex;
     margin-top: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 .add-cart input
 {
@@ -217,6 +222,54 @@ nav
 {
     font-size: 16px;
     color: #3d3a3a;
+}
+/*--size guide --*/
+.size-guide
+{
+    margin-bottom: 30px;
+    padding: 15px;
+    width: 320px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 5px;
+}
+.size-guide p
+{
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    margin-left: 55px;
+}
+.size-guide select option
+{
+    color: rgb(10, 134, 10);
+}
+.sg-row
+{
+    display: flex;
+    justify-content: center;
+}
+.sg-b
+{
+    margin-left: 30px;
+}
+.sg-row select
+{
+    padding: 4px;
+    border-radius: 5px;
+    color: rgb(10, 134, 10);
+    
+}
+#sg-btn
+{
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ff523b;
+    margin-left: 63px;
+    background: #ff523b;
+    color: #fff;
+     
 }
 
 /*--cart messages--*/
@@ -371,7 +424,23 @@ nav
 }
 .chk-alt-content
 {
-    margin-left: 20%;
+    margin: 70px 0 120px 25%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 50%;
+    padding: 20px 0 20px 150px;
+    border-radius: 10px;
+}
+#alt-content-btn
+{
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 75px;
+    background: #ff523b;
+    color: #fff;
+    border-color: #ff523b;
+    font-size: 14px;
 }
 
 /*--chekout cart summary table--*/

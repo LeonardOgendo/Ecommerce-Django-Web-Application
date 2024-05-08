@@ -28,15 +28,15 @@
                 <li><a href="{% url 'Core:main' %}">Home</a></li>
                 {% if user.is_authenticated %}
                     <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Hi, {{user.username}}</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
-                    <div class="acc-submenu">
-                        <ul>
-                            <li><a href="">My Account</a></li>
-                            <li><a href="">Orders</a></li>
-                            <li><a href="">Saved Items</a></li>
-                            <li><a href="{% url 'Authentication:custom_logout' %}">Log Out</a></li>
-                
-                        </ul>
-                    </div>
+                        <div class="acc-submenu">
+                            <ul>
+                                <li><a href="">My Account</a></li>
+                                <li><a href="">Orders</a></li>
+                                <li><a href="">Saved Items</a></li>
+                                <li><a href="{% url 'Authentication:custom_logout' %}">Log Out</a></li>
+                    
+                            </ul>
+                        </div>
                 </li>
                 {% else %}
                     <li class="acc"><div class="inside-li"><i class="fa fa-user" id="fauser"></i><a href="about.html">Account</a><i class="fa fa-chevron-down" id="fadown1"></i></div>
@@ -51,7 +51,15 @@
                         </div>
                     </li>
                 {% endif %}
-                <li><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div></li>
+                <li class="acc"><div class="inside-li"><i class="fa fa-question-circle" id="fahelp"></i><a href="contact.html">Help</a><i class="fa fa-chevron-down" id="fadown2"></i></div>
+                    <div class="acc-submenu" id="submenu-2">
+                        <ul>
+                            <li><a href="{% url 'Core:help-orderplacement' %}">Placing an Order</a></li>
+                            <li><a href="{% url 'Core:help-payments' %}">Payments</a></li>
+                            <li><a href="{% url 'Core:help-returns' %}">Return and Refunds</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="{% url 'Core:order-summary' %}"><span class="count-badge">{{ request.user|cart_item_count }}</span><i class="fa fa-shopping-cart" id="facart"></i>Cart</a></li>
                 </ul>
         </div>
@@ -97,19 +105,51 @@
                 
             </div>
             <p>Ksh {{object.price}}</p>
+    
+            <form method="POST" action="{% url 'Core:add-to-cart' object.slug %}"> 
+                {% csrf_token %}
             <div class="cart-box">
                 <div class="add-cart">
                     <input type="number" name="quantity" maxlength="2">
                 </div>
                 <div class="add-cart">
-                    <a href="{{ object.get_add_to_cart_url }}"><button id="cart-btn">Add To Cart</button></a>
+                    <a href="{{ object.get_add_to_cart_url }}"><button type="submit" id="cart-btn">Add To Cart</button></a>
                 </div>
                 <div class="remove-cart">
-                    <a href="{{ object.get_remove_from_cart_url }}"><button id="remove-cart-btn">Remove From Cart</button></a>
+                    <a href="{{ object.get_remove_from_cart_url }}"><button type="button" id="remove-cart-btn">Remove From Cart</button></a>
                 </div>
             </div>
+
+            {% if object.item_category == 'clothing&footwear' %}
+            <div class="size-guide">
+                <p>Ultimate Size Guide</p>
+                <div class="sg-row">
+                    <div class="sg-a">
+                        <select name="size">
+                            <option>S</option>
+                            <option>M</option>
+                            <option>X</option>
+                            <option>XL</option>
+                            <option>2XL</option>
+                            <option>3XL</option>
+                        </select>
+                    </div>
+                    <div class="sg-b">
+                        <select name="size-category">
+                            <option>Adult</option>
+                            <option>Child</option>
+                        </select>
+                    </div>
+                </div>
+                <a href="{% url 'Core:size-chart' %}"><button type="button" id="sg-btn">View Size Chart</button></a>
+            </div>
+            {% endif %}
+            </form>
+        
             <h5>Product Description</h5>
             <p class="item-desc">{{ object.description }}</p>
+
+            
         </div>
     </section>
     </section>
@@ -159,3 +199,4 @@
     
 </body>
 </html>
+              

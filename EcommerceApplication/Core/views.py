@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Item, Order, OrderItem, CustomerDetail
 from django.views.generic import ListView, DetailView, View
@@ -8,10 +8,17 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django_daraja.mpesa.core import MpesaClient
 from django_countries import countries
+import json
+from django.urls import reverse
+from django.conf import settings
+
 
 # Create your views here.
+
 def main(request):
-    return render(request, 'main.html')
+    featured_items = Item.objects.filter(item_status='featured')
+    latest_items = Item.objects.filter(item_status='latest')
+    return render(request, 'main.html', {'featured_items':featured_items, 'latest_items':latest_items})
 
 class ProductsListView(ListView):
     model = Item
@@ -31,6 +38,17 @@ def add_to_cart(request, slug):
             user=request.user,
             ordered=False
         )
+        
+        # saving the selected size guide options
+        if request.method == 'POST':
+            size = request.POST.get('size')
+            category = request.POST.get('size-category')
+            
+            # Save the selected size and category to the order item
+            order_item.size = size
+            order_item.size_category = category
+            order_item.save()
+            
         order_qs = Order.objects.filter(user=request.user, ordered=False)
 
         if order_qs.exists():
@@ -85,17 +103,20 @@ def remove_from_cart(request, slug):
     return redirect('Core:itemdetailview', slug=slug)
 
 class OrderSummaryView(View):
-    def get(self, *args, **kwargs):
-        
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            context = {
-                'object':order
-            }
-            return render(self.request, 'ordersummary.html', context) 
-        except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an active order.")
-            return redirect('/')
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            try:
+                order = Order.objects.get(user=self.request.user, ordered=False)
+                context = {
+                    'object':order
+                }
+                return render(self.request, 'ordersummary.html', context) 
+            except ObjectDoesNotExist:
+                messages.error(self.request, "You do not have an active order.")
+                return redirect('/')
+        else:
+            messages.error(request, "You are not logged in.")
+            return redirect('account_login')
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -110,37 +131,61 @@ class CheckoutView(View):
             'customer_details': customer_details
         }
         return render(self.request, 'checkout.html', context)
+    
+def help_orderplacement(request):
+    return render(request, 'help_orderplacement.html')
+
+def help_payments(request):
+    return render(request, 'help_payments.html')
+ 
+def help_returns(request):
+    return render(request, 'help_returns.html')
+   
 # mpesa api
 
 def mpesa_payment(request):
-    cl = MpesaClient()
+    if request.method == 'POST':
+        order = Order.objects.filter(user=request.user, ordered=False).first()
+        customer = CustomerDetail.objects.filter(user=request.user).first()
 
-    # Getting the current user's phone number from CustomerDetail model
-    customer_detail = get_object_or_404(CustomerDetail, user=request.user)
-    phone_number = customer_detail.phone_number
+        cl = MpesaClient()
+        phone_number = customer.phone_number
+        amount = int(order.get_total())
 
-    # Get the total amount for the order
-    order = Order.objects.filter(user=request.user, ordered=False).first()
-    if order is None:
-        return HttpResponse("No pending order found for this user", status=400)
-    
-    amount = order.get_total()
+        account_reference = 'Africana_sales'
+        transaction_desc = 'Africana products'
 
-    account_reference = 'reference'
-    transaction_desc = 'Description'
-    callback_url = 'https://2541-196-250-209-176.ngrok-free.app'
-    
-    # Update order status
-    order.ordered = True
-    order.save()
+        callback_url = f'https://{settings.NGROK_DOMAIN}/{reverse("Core:stk_push_callback")}'
+        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
 
-    # Perform STK push
-    response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-    
-    #return to the placed order view
-    return HttpResponse(response)
+        return HttpResponse(response)
 
+    return HttpResponse('Method not allowed', status=405)
 
+@login_required
+def stk_push_callback(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            if data['Body']['stkCallback']['ResultCode'] == 0:
+                # If the payment was successful update the order status,
+                # send confirmation email to the user
+                order = Order.objects.filter(user=request.user, ordered=False).first()
+                if order:
+                    order.ordered = True
+                    order.save()
+                    messages.success(request, 'Payment completed successfully.')
+                    return redirect('Core:order-summary')
+                else:
+                    messages.error(request, 'Order not found.')
+            else:
+                messages.error(request, f'Error processing payment: {data["Body"]["stkCallback"]["ResultDesc"]}')
+        except Exception as e:
+            messages.error(request, 'Error processing payment: {}'.format(e))
+
+        return HttpResponse('Payment not processed', status=400)
+
+    return HttpResponse('Method not allowed', status=405)
 
 @login_required
 def customer_details_view(request):
@@ -166,3 +211,6 @@ def customer_details_view(request):
         return redirect('Core:customer-details-view')
 
     return render(request, 'customerdetails.html', {'countries':countries})
+
+def size_chart(request):
+    return render(request, 'size_chart.html')

@@ -14,6 +14,8 @@ class Item(models.Model):
     descimage2 = models.ImageField(upload_to='images/', null=True)
     descimage3 = models.ImageField(upload_to='images/', null=True)
     slug = models.SlugField()
+    item_status = models.CharField(max_length=10, choices=(('featured', 'Featured'), ('latest', 'Latest')), null=True)
+    item_category = models.CharField(max_length=20, choices=(('clothing&footwear', 'Clothing & Footwear'), ('electronics', 'Electronics')), null=True)
     
     def __str__(self):
         return self.title
@@ -21,7 +23,7 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse('Core:itemdetailview', kwargs={
             'slug':self.slug
-            })    
+        })    
     
     def get_add_to_cart_url(self):
         return reverse("Core:add-to-cart", kwargs={
@@ -38,6 +40,8 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    size = models.CharField(max_length=10, null=True)
+    size_category = models.CharField(max_length=10, null=True)
     
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
@@ -72,7 +76,7 @@ class CustomerDetail(models.Model):
     surname = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100)
     town = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=20)  # Assuming phone number can include non-numeric characters like '+'
+    phone_number = models.CharField(max_length=20)
     pickup_station = models.CharField(max_length=100)
 
     def __str__(self):
