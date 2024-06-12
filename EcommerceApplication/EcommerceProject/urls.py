@@ -23,6 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('Authentication.urls', namespace = 'Authentication')),
-    path('', include('Core.urls', namespace = 'Core'))
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', include('Core.urls', namespace = 'Core')),
+    path('', include('Payments.urls', namespace= 'Payments'))
+]
+
+if settings.DEBUG:
+   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

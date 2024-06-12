@@ -68,71 +68,71 @@
     {% if customer_details %}
         <section class="checkout">
             
-            <form id="checkout-form" method="POST" action="{% url 'Core:mpesa-payment'%}">
-            {% csrf_token %}
-            <div class="flex-box">
-                <div class="chkout-box">
-                    <div class="cbox">
-                        <div class="mini-fbox">
-                            <div><h4>Customer Address</h4></div>
-                            <div><a id="anchor1" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+            <form id="checkout-form" method="POST" action="{% url 'Core:checkout'%}">
+                {% csrf_token %}
+                <div class="flex-box">
+                    <div class="chkout-box">
+                        <div class="cbox">
+                            <div class="mini-fbox">
+                                <div><h4>Customer Address</h4></div>
+                                <div><a id="anchor1" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+                            </div>
+                            <p>{{ customer_details.first_name }} {{ customer_details.surname}}</p>
+                            <p style="margin-top: 10px;">{{ customer_details.country }} | {{ customer_details.town }} | {{ customer_details.phone_number }}
                         </div>
-                        <p>{{ customer_details.first_name }} {{ customer_details.surname}}</p>
-                        <p style="margin-top: 10px;">{{ customer_details.country }} | {{ customer_details.town }} | {{ customer_details.phone_number }}
-                    </div>
-                    <div class="cbox">
-                        <div class="mini-fbox">
-                            <div><h4>Delivery Details</h4></div>
-                            <div><a id="anchor2" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+                        <div class="cbox">
+                            <div class="mini-fbox">
+                                <div><h4>Delivery Details</h4></div>
+                                <div><a id="anchor2" href="{% url 'Core:customer-details-view' %}">Change<i id="chv-right" class="fa fa-chevron-right"></i></a></div>
+                            </div>
+                            <p>Pick-up Station</p>
+                            <p>{{ customer_details.pickup_station }}</p>
                         </div>
-                        <p>Pick-up Station</p>
-                        <p>{{ customer_details.pickup_station }}</p>
-                    </div>
-                    <div class="cbox">
-                        <h4>Payment Method</h4>
-                        <input type="radio" id="mpesa" name="payment_method">
-                        <label for="mpesa">M-Pesa</label>
-                        <br>
-                        <input type="radio" id="paypal" name="payment_method">
-                        <label for="paypal">PayPal</label>
-                    </div>
+                        <div class="cbox">
+                            <h4>Payment Method</h4>
+                            <input type="radio" id="mpesa" name="payment_method" value="mpesa">
+                            <label for="mpesa">M-Pesa</label>
+                            <br>
+                            <input type="radio" id="paypal" name="payment_method" value="paypal">
+                            <label for="paypal">PayPal</label>
+                        </div>
 
-                </div>
-                <div class="chkout-box" id="chk-cart">
-                    <div class="mini-fbox">
-                        <div><h4>Your Cart</h4></div>
-                        <div><span class="cart-count2">{{ request.user|cart_item_count }}</div>
                     </div>
-                    <div class="chkcart">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Item title</th>
-                                    <th scope="col">Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for order_item in object.items.all %}
-                                <tr>
-                                    <td>{{order_item.item.title}}</td>
-                                    <td>Ksh. {{order_item.item.price}}</td>
-                                </tr>
-                                {% endfor %}
-                                <tr>
-                                    <td><b>Order Total</b></td>
-                                    <td colspan="1">Ksh. {{object.get_total}}</td>
+                    <div class="chkout-box" id="chk-cart">
+                        <div class="mini-fbox">
+                            <div><h4>Your Cart</h4></div>
+                            <div><span class="cart-count2">{{ request.user|cart_item_count }}</div>
+                        </div>
+                        <div class="chkcart">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item title</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order_item in object.items.all %}
+                                    <tr>
+                                        <td>{{order_item.item.title}}</td>
+                                        <td>Ksh. {{order_item.item.price}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td><b>Order Total</b></td>
+                                        <td colspan="1">Ksh. {{object.get_total}}</td>
 
-                                </tr>
-                        </table>
+                                    </tr>
+                            </table>
 
-                        
-                    </div>
-                    <div class="checkout-btns">
-                        <button id="chk-btn1">Modify Cart</button>
-                        <button type="submit" id="chk-btn2" >Confirm Order</button>
+                            
+                        </div>
+                        <div class="checkout-btns">
+                            <button id="chk-btn1">Modify Cart</button>
+                            <button type="submit" id="chk-btn2" >Confirm Order</button>
+                        </div>
                     </div>
                 </div>
-            </div>
         </form>
         </section>
 

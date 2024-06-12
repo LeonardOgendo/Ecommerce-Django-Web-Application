@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Item, Order, OrderItem, CustomerDetail
+from .models import Item, Order, OrderItem, CustomerDetail, CheckoutDetail
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
 from django.utils import timezone
@@ -119,19 +119,54 @@ class OrderSummaryView(View):
             return redirect('account_login')
 
 class CheckoutView(View):
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        
+        if request.user.is_authenticated:
+            try:
+                order = Order.objects.get(user=request.user, ordered=False)
+                context = {
+                    'customer_details':CustomerDetail.objects.get(user=request.user),
+                    'object': order
+                }
+        
+                return render(request, 'checkout.html', context)
+            except ObjectDoesNotExist:
+                messages.info(request, 'You do not have an active order.')
+                return redirect('Core:productslistview')
+        else:
+            return redirect('account_login')
+        
+    def post(self, request, *ags, **kwargs):
         try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            customer_details = CustomerDetail.objects.get(user=self.request.user)
-        except CustomerDetail.DoesNotExist:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            customer_details = None
-        context = {
-            'object': order,
-            'customer_details': customer_details
-        }
-        return render(self.request, 'checkout.html', context)
-    
+            order = Order.objects.get(user=request.user, ordered=False)
+            payment_method = request.POST.get('payment_method')
+            customer_details = CustomerDetail.objects.get(user=request.user)
+            if payment_method is not None:
+                #save to backend
+                checkout_details = CheckoutDetail(
+                    customer_details = customer_details,
+                    payment_option = payment_method
+                )
+                checkout_details.save()
+                order.checkout_details = checkout_details
+                order.save()
+            
+            # redirect to appropriate views.
+                if payment_method == 'mpesa':
+                    return redirect('Payments:m-pesa')
+                elif payment_method == 'paypal':
+                    return redirect('Payments:paypal')
+                else:
+                    # Handle other payment methods or unexpected values
+                    messages.error(request, 'Unknown payment method selected')
+                    return redirect('Core:checkout')
+            else:
+                messages.error(request, 'no payment option selected')
+                return redirect('Core:checkout')
+            
+        except ObjectDoesNotExist:
+            messages.info(request, "You don't have an active order.")
+            return redirect('Core:productslistview')
 def help_orderplacement(request):
     return render(request, 'help_orderplacement.html')
 
@@ -141,51 +176,7 @@ def help_payments(request):
 def help_returns(request):
     return render(request, 'help_returns.html')
    
-# mpesa api
 
-def mpesa_payment(request):
-    if request.method == 'POST':
-        order = Order.objects.filter(user=request.user, ordered=False).first()
-        customer = CustomerDetail.objects.filter(user=request.user).first()
-
-        cl = MpesaClient()
-        phone_number = customer.phone_number
-        amount = int(order.get_total())
-
-        account_reference = 'Africana_sales'
-        transaction_desc = 'Africana products'
-
-        callback_url = f'https://{settings.NGROK_DOMAIN}/{reverse("Core:stk_push_callback")}'
-        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-
-        return HttpResponse(response)
-
-    return HttpResponse('Method not allowed', status=405)
-
-@login_required
-def stk_push_callback(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            if data['Body']['stkCallback']['ResultCode'] == 0:
-                # If the payment was successful update the order status,
-                # send confirmation email to the user
-                order = Order.objects.filter(user=request.user, ordered=False).first()
-                if order:
-                    order.ordered = True
-                    order.save()
-                    messages.success(request, 'Payment completed successfully.')
-                    return redirect('Core:order-summary')
-                else:
-                    messages.error(request, 'Order not found.')
-            else:
-                messages.error(request, f'Error processing payment: {data["Body"]["stkCallback"]["ResultDesc"]}')
-        except Exception as e:
-            messages.error(request, 'Error processing payment: {}'.format(e))
-
-        return HttpResponse('Payment not processed', status=400)
-
-    return HttpResponse('Method not allowed', status=405)
 
 @login_required
 def customer_details_view(request):
@@ -214,3 +205,4 @@ def customer_details_view(request):
 
 def size_chart(request):
     return render(request, 'size_chart.html')
+

@@ -58,7 +58,8 @@ class Order(models.Model):
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)   
+    ordered = models.BooleanField(default=False)
+    checkout_details = models.ForeignKey('CheckoutDetail', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.user.username
@@ -81,3 +82,11 @@ class CustomerDetail(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.surname}"
+    
+class CheckoutDetail(models.Model):
+    customer_details = models.ForeignKey('CustomerDetail', on_delete=models.SET_NULL, null=True, blank=True)
+    payment_option = models.TextField()
+    
+    def __str__(self):
+        return f"{self.customer_details.first_name} - {self.customer_details.pickup_station}"
+    

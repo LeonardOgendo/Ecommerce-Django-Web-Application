@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .import views
 
 app_name = 'Core'
 urlpatterns = [
@@ -15,9 +15,4 @@ urlpatterns = [
     path('help/payments', views.help_payments, name='help-payments'),
     path('help/returns', views.help_returns, name="help-returns"),
     path('size-chart' ,views.size_chart, name='size-chart'),
-    
-    #MPESA API
-    path('mpesa-payment', views.mpesa_payment, name='mpesa-payment'),
-    path('mpesa-callback', views.stk_push_callback, name='stk_push_callback')
-       
 ]

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'Authentication',
     'Core',
+    'Payments',
     'django_daraja',
     'django_countries'
 ]  
@@ -128,6 +129,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS= (os.path.join(BASE_DIR, 'static'),)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -151,18 +155,5 @@ ACCOUNT_SIGNUP_TEMPLATE = 'account/signup.html'
 LOGIN_REDIRECT_URL = '/'
 
 
-#MPESA
-MPESA_ENVIRONMENT = 'sandbox'
-MPESA_CONSUMER_KEY = 'U3u5jARsqEn3t8cZGrrIzAlsiTbmeWkfjP8cmbOuXFqdIjb4'
-MPESA_CONSUMER_SECRET = 'X1lOXQYmX5LHuwotvTR0wQuYDLnZzrnhT81m6DuSH8GSiO8jLgVFu1AI4Wrpk4wZ'
-MPESA_SHORTCODE = '174379'
 
-MPESA_EXPRESS_SHORTCODE = '174379'
 
-MPESA_SHORTCODE_TPE = 'paybill'
-MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-MPESA_INITIATOR_USERNAME = 'testapi'
-MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom999!*!'
-
-#ngrok domain for testing
-NGROK_DOMAIN = '2125-197-248-74-74.ngrok-free.app'

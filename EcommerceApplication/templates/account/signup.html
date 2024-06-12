@@ -82,7 +82,7 @@
             <form method="POST" action="{% url 'account_signup' %}">
                 {% csrf_token %}
                 <p>Username</p>
-                <input type="text" name="username">
+                <input type="email" name="username">
                 <p>Email Address</p>
                 <input type="email" name="email">
                 <p>Password</p>
