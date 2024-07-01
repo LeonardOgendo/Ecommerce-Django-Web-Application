@@ -164,6 +164,6 @@ LOGIN_REDIRECT_URL = '/'
 #CSRF_TRUSTED_ORIGINS = ['https://b2da-154-159-237-77.ngrok-free.app']
 #USE_X_FORWARDED_HOST = True
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
+#https://africana-ea36475f6b12.herokuapp.com/
 
 
