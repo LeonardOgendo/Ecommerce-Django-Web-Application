@@ -23,8 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('Authentication.urls', namespace = 'Authentication')),
-    path('', include('Core.urls', namespace = 'Core')),
-    path('', include('Payments.urls', namespace= 'Payments'))
+    path('', include('Core.urls', namespace = 'Core'))
 ]
 
 if settings.DEBUG:
